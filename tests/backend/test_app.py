@@ -6,6 +6,15 @@ from src import app as app_module
 client = TestClient(app_module.app)
 
 
+def test_get_activities_returns_activity_catalog():
+    response = client.get("/activities")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "Chess Club" in data
+    assert "participants" in data["Chess Club"]
+
+
 def test_unregister_participant_removes_email_from_activity():
     activity_name = "Chess Club"
     email = "new.student@mergington.edu"
